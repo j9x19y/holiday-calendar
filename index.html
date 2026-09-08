@@ -801,6 +801,17 @@ footer a {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+/* 云同步弹窗按钮居中 */
+#syncOverlay .modal-actions {
+  justify-content: center;
+}
+
+#syncOverlay .modal-actions button {
+  flex: 0 1 auto;
+  min-width: 120px;
+  padding: 10px 24px;
+}
 </style>
 </head>
 <body>
@@ -1330,7 +1341,7 @@ const cloudSync = {
       syncStatusText.textContent = '已连接，标识自动云同步';
       tokenSection.style.display = 'none';
       btnConnect.textContent = '断开连接';
-      btnConnect.className = 'modal-actions btn-disconnect';
+      btnConnect.className = 'btn-disconnect';
       syncInfo.style.display = 'block';
       syncInfo.innerHTML = `
         <b>同步状态：</b>已开启<br>
@@ -1344,7 +1355,7 @@ const cloudSync = {
       syncStatusText.textContent = '未连接，标识仅保存在本地';
       tokenSection.style.display = 'block';
       btnConnect.textContent = '连接云同步';
-      btnConnect.className = 'modal-actions btn-connect';
+      btnConnect.className = 'btn-connect';
       syncInfo.style.display = 'none';
     }
   }
