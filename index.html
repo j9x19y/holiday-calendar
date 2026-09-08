@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>假期总览 2026年9月 — 2027年5月</title>
+<style>
+:root {
+  --bg: #f8f6f3;
+  --card-bg: #ffffff;
+  --text: #1a1a2e;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --weekend-bg: #f3f4f6;
+  --today-ring: #3b82f6;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding: 24px 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ===== Header ===== */
+header {
+  background: linear-gradient(135deg, #b71c1c 0%, #d32f2f 45%, #f5a623 100%);
+  border-radius: 20px;
+  padding: 44px 32px 36px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 24px;
+  box-shadow: 0 12px 48px rgba(183, 28, 28, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+}
+header::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -30px;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+}
+
+header h1 {
+  font-size: 30px;
+  margin-bottom: 6px;
+  letter-spacing: 3px;
+  position: relative;
+}
+
+header .subtitle {
+  font-size: 15px;
+  opacity: 0.88;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+header .stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+header .stat .num {
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+header .stat .label {
+  font-size: 13px;
+  opacity: 0.82;
+  margin-top: 2px;
+}
+
+/* ===== Next Holiday Banner ===== */
+.next-holiday {
+  background: linear-gradient(135deg, #fef9e7 0%, #fde68a 100%);
+  border: 1.5px solid #f59e0b;
+  border-radius: 14px;
+  padding: 18px 28px;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.next-holiday .dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #d97706;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.25);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(245,158,11,0.25); }
+  50% { box-shadow: 0 0 0 8px rgba(245,158,11,0.12); }
+}
+
+.next-holiday .label-text {
+  font-size: 13px;
+  color: #92400e;
+}
+
+.next-holiday .countdown {
+  font-size: 17px;
+  font-weight: 700;
+  color: #78350f;
+}
+
+.next-holiday .countdown .days-num {
+  color: #c62828;
+  font-size: 22px;
+  margin: 0 2px;
+}
+
+/* ===== Holiday Cards ===== */
+.holiday-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.holiday-card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 22px 20px 20px;
+  border-left: 5px solid var(--hc);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+}
+
+.holiday-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+}
+
+.holiday-card .badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 9px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.badge.official {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.badge.estimated {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.holiday-card h3 {
+  font-size: 19px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.holiday-card .date-range {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.holiday-card .days {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.holiday-card .makeup-note {
+  font-size: 12px;
+  color: #b45309;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed #fde68a;
+}
+
+/* ===== Calendar Section ===== */
+.calendars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 960px) {
+  .calendars { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .calendars { grid-template-columns: 1fr; }
+}
+
+.month-card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 18px 16px 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+.month-card .month-title {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 14px;
+  color: var(--text);
+}
+
+.month-card .month-title .year-tag {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.cal-grid .wh {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 4px 0 6px;
+  font-weight: 600;
+}
+
+.cal-grid .wh.we { color: #d97706; }
+
+.cal-grid .cell {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  font-size: 13px;
+  position: relative;
+  background: transparent;
+  transition: transform 0.12s ease;
+}
+
+.cal-grid .cell.empty { background: transparent; }
+
+.cal-grid .cell.we {
+  background: var(--weekend-bg);
+  color: #9ca3af;
+}
+
+.cal-grid .cell.holiday {
+  color: #fff;
+  font-weight: 700;
+}
+
+.cal-grid .cell.holiday .hn {
+  font-size: 8px;
+  font-weight: 500;
+  opacity: 0.92;
+  margin-top: 1px;
+  line-height: 1;
+}
+
+.cal-grid .cell.makeup {
+  background: repeating-linear-gradient(45deg, #fef3c7, #fef3c7 5px, #fde68a 5px, #fde68a 10px);
+  color: #b45309;
+  font-weight: 700;
+}
+
+.cal-grid .cell.makeup::after {
+  content: '班';
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  font-size: 8px;
+  color: #b45309;
+  font-weight: 600;
+}
+
+.cal-grid .cell.today {
+  box-shadow: 0 0 0 2.5px var(--today-ring);
+}
+
+.cal-grid .cell.today::before {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--today-ring);
+}
+
+/* ===== Legend ===== */
+.legend {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 22px 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  margin-bottom: 24px;
+}
+
+.legend h3 {
+  font-size: 15px;
+  margin-bottom: 14px;
+}
+
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.legend-swatch {
+  width: 22px; height: 22px;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.legend-swatch.today-swatch {
+  background: transparent;
+  box-shadow: 0 0 0 2.5px var(--today-ring);
+}
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 16px 8px;
+  line-height: 1.8;
+}
+
+footer a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+/* ===== 自定义标识日期格子 ===== */
+.cal-grid .cell.custom {
+  cursor: pointer;
+}
+
+.cal-grid .cell.custom .cn {
+  font-size: 8px;
+  font-weight: 600;
+  margin-top: 1px;
+  line-height: 1;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cal-grid .cell:not(.empty):not(.custom) {
+  cursor: pointer;
+}
+
+/* 自定义标识指示器（非自定义颜色的小圆点） */
+.cal-grid .cell .custom-dot {
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+}
+
+/* ===== 编辑弹窗 ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(2px);
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 24px 24px;
+  width: 340px;
+  max-width: 90vw;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  animation: modalIn 0.2s ease;
+}
+
+@keyframes modalIn {
+  from { transform: translateY(20px) scale(0.95); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.modal h3 {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.modal .modal-date {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.modal .field-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* 颜色选择器 */
+.color-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.color-opt {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2.5px solid transparent;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+  position: relative;
+}
+
+.color-opt:hover { transform: scale(1.12); }
+
+.color-opt.selected {
+  border-color: #1a1a2e;
+  transform: scale(1.1);
+}
+
+.color-opt.selected::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px; height: 12px;
+  border: 2.5px solid #fff;
+  border-radius: 50%;
+}
+
+.color-opt.custom-color-wrap {
+  background: conic-gradient(from 0deg, #ef4444, #f59e0b, #eab308, #22c55e, #06b6d4, #3b82f6, #8b5cf6, #ec4899, #ef4444);
+  overflow: hidden;
+}
+
+.color-opt.custom-color-wrap input[type="color"] {
+  opacity: 0;
+  width: 100%; height: 100%;
+  cursor: pointer;
+  border: none;
+}
+
+/* 备注输入 */
+.note-input-wrap {
+  margin-bottom: 24px;
+}
+
+.note-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s ease;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+.note-input:focus {
+  border-color: #3b82f6;
+}
+
+.note-input::placeholder {
+  letter-spacing: 0;
+  color: #d1d5db;
+}
+
+.char-count {
+  text-align: right;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.char-count.over {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* 按钮组 */
+.modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-actions button {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, opacity 0.15s ease;
+  font-family: inherit;
+}
+
+.btn-save {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.btn-save:hover { background: #2563eb; }
+
+.btn-clear {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1.5px solid #fecaca;
+}
+
+.btn-clear:hover { background: #fee2e2; }
+
+.btn-cancel {
+  flex: 1;
+  background: #f3f4f6;
+  color: var(--text-muted);
+}
+
+.btn-cancel:hover { background: #e5e7eb; }
+
+/* Toast 提示 */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: #1a1a2e;
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 1100;
+  pointer-events: none;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* 操作提示条 */
+.hint-bar {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  padding: 10px 18px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: #1e40af;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hint-bar .icon {
+  font-size: 16px;
+}
+
+.hint-bar .hint-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.hint-bar .hint-btn,
+.hint-bar .clear-all-btn {
+  background: transparent;
+  border: 1px solid #93c5fd;
+  color: #1e40af;
+  padding: 3px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+
+.hint-bar .hint-btn:hover,
+.hint-bar .clear-all-btn:hover {
+  background: #dbeafe;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>假期总览</h1>
+    <p class="subtitle">2026年9月 — 2027年5月 · 中国法定节假日</p>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <div class="next-holiday" id="nextHoliday"></div>
+
+  <div class="hint-bar">
+    <span class="icon">💡</span>
+    <span>点击任意日期可自定义颜色和备注（最多4个字），标识会自动保存到当前浏览器</span>
+    <div class="hint-actions">
+      <button class="hint-btn" id="exportBtn" title="导出标识数据为文件">导出</button>
+      <button class="hint-btn" id="importBtn" title="从文件导入标识数据">导入</button>
+      <input type="file" id="importFile" accept=".json" style="display:none">
+      <button class="clear-all-btn" id="clearAllBtn">清除全部</button>
+    </div>
+  </div>
+
+  <section class="holiday-cards" id="holidayCards"></section>
+
+  <section class="calendars" id="calendars"></section>
+
+  <section class="legend">
+    <h3>图例说明</h3>
+    <div class="legend-items" id="legendItems"></div>
+  </section>
+
+  <footer>
+    <p>2026年假期安排来源于国务院办公厅官方通知（国办发明电〔2025〕7号）</p>
+    <p>2027年假期为根据农历及历年惯例推算的<strong>预估</strong>，仅供参考，以官方公布为准</p>
+    <p>调休上班日（黄色条纹标记）为周末补班日，虽逢周末但需上班</p>
+  </footer>
+
+</div>
+
+<!-- 编辑弹窗 -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="editModal">
+    <h3 id="modalTitle">编辑标识</h3>
+    <div class="modal-date" id="modalDate"></div>
+
+    <label class="field-label">选择颜色</label>
+    <div class="color-palette" id="colorPalette"></div>
+
+    <div class="note-input-wrap">
+      <label class="field-label">备注（最多4个字）</label>
+      <input type="text" class="note-input" id="noteInput" maxlength="4" placeholder="如：出差、生日、考试…">
+      <div class="char-count" id="charCount">0 / 4</div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-clear" id="btnClear">清除标识</button>
+      <button class="btn-cancel" id="btnCancel">取消</button>
+      <button class="btn-save" id="btnSave">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== 假期数据 ===== */
+const holidays = [
+  {
+    name: '中秋节', shortName: '中秋',
+    startDate: new Date(2026, 8, 25), endDate: new Date(2026, 8, 27),
+    days: 3, color: '#f59e0b',
+    dateText: '9月25日（周五）— 27日（周日）',
+    official: true
+  },
+  {
+    name: '国庆节', shortName: '国庆',
+    startDate: new Date(2026, 9, 1), endDate: new Date(2026, 9, 7),
+    days: 7, color: '#dc2626',
+    dateText: '10月1日（周四）— 7日（周三）',
+    official: true,
+    makeupWorkdays: [
+      { date: new Date(2026, 8, 20), reason: '国庆节调休上班' },
+      { date: new Date(2026, 9, 10), reason: '国庆节调休上班' }
+    ]
+  },
+  {
+    name: '元旦', shortName: '元旦',
+    startDate: new Date(2027, 0, 1), endDate: new Date(2027, 0, 3),
+    days: 3, color: '#2563eb',
+    dateText: '1月1日（周五）— 3日（周日）',
+    official: false
+  },
+  {
+    name: '春节', shortName: '春节',
+    startDate: new Date(2027, 1, 5), endDate: new Date(2027, 1, 12),
+    days: 8, color: '#b71c1c',
+    dateText: '2月5日（周五·除夕）— 12日（周五·初七）',
+    official: false
+  },
+  {
+    name: '清明节', shortName: '清明',
+    startDate: new Date(2027, 3, 4), endDate: new Date(2027, 3, 6),
+    days: 3, color: '#16a34a',
+    dateText: '4月4日（周日）— 6日（周二）',
+    official: false
+  },
+  {
+    name: '劳动节', shortName: '劳动节',
+    startDate: new Date(2027, 4, 1), endDate: new Date(2027, 4, 5),
+    days: 5, color: '#0891b2',
+    dateText: '5月1日（周六）— 5日（周三）',
+    official: false
+  }
+];
+
+/* 所有调休上班日 */
+const allMakeup = [];
+holidays.forEach(h => {
+  if (h.makeupWorkdays) h.makeupWorkdays.forEach(m => allMakeup.push(m));
+});
+
+/* 今天 */
+const today = new Date(2026, 8, 8);
+
+/* ===== 工具函数 ===== */
+function dateKey(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function sameDay(a, b) {
+  return dateKey(a) === dateKey(b);
+}
+
+function getHoliday(d) {
+  return holidays.find(h => d >= h.startDate && d <= h.endDate);
+}
+
+function getMakeup(d) {
+  return allMakeup.find(m => sameDay(m.date, d));
+}
+
+/* ===== 渲染统计 ===== */
+function renderStats() {
+  const totalDays = holidays.reduce((s, h) => s + h.days, 0);
+  const off = holidays.filter(h => h.official).length;
+  const est = holidays.length - off;
+  document.getElementById('stats').innerHTML = `
+    <div class="stat"><div class="num">${holidays.length}</div><div class="label">假期总数</div></div>
+    <div class="stat"><div class="num">${totalDays}</div><div class="label">放假天数</div></div>
+    <div class="stat"><div class="num">${off}</div><div class="label">已官宣</div></div>
+    <div class="stat"><div class="num">${est}</div><div class="label">预估中</div></div>
+  `;
+}
+
+/* ===== 渲染下一个假期倒计时 ===== */
+function renderNextHoliday() {
+  const next = holidays.find(h => h.startDate > today);
+  if (!next) return;
+  const days = Math.ceil((next.startDate - today) / 86400000);
+  document.getElementById('nextHoliday').innerHTML = `
+    <div class="dot"></div>
+    <div>
+      <div class="label-text">距离下一个假期</div>
+      <div class="countdown">${next.name} 还有<span class="days-num">${days}</span>天 · ${next.dateText}</div>
+    </div>
+  `;
+}
+
+/* ===== 渲染假期卡片 ===== */
+function renderCards() {
+  document.getElementById('holidayCards').innerHTML = holidays.map(h => {
+    let extra = '';
+    if (h.makeupWorkdays) {
+      const dates = h.makeupWorkdays.map(m =>
+        `${m.date.getMonth()+1}月${m.date.getDate()}日（${'日一二三四五六'[m.date.getDay()]}）`
+      ).join('、');
+      extra = `<div class="makeup-note">调休上班：${dates}</div>`;
+    }
+    const note = h.official ? '' : '<div class="makeup-note" style="color:#92400e;border-color:#e5e7eb">2027年预估安排，待官方公布</div>';
+    return `
+      <div class="holiday-card" style="--hc:${h.color}">
+        <span class="badge ${h.official ? 'official' : 'estimated'}">${h.official ? '官方' : '预估'}</span>
+        <h3 style="color:${h.color}">${h.name}</h3>
+        <div class="date-range">${h.dateText}</div>
+        <div class="days" style="color:${h.color}">共 ${h.days} 天</div>
+        ${extra}
+        ${note}
+      </div>
+    `;
+  }).join('');
+}
+
+/* ===== 渲染单月日历 ===== */
+const monthNames = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+const weekdays = ['日','一','二','三','四','五','六'];
+
+function renderMonth(year, month) {
+  const first = new Date(year, month, 1);
+  const startWd = first.getDay();
+  const daysIn = new Date(year, month+1, 0).getDate();
+
+  let html = `<div class="month-card"><div class="month-title">${monthNames[month]}<span class="year-tag">${year}</span></div><div class="cal-grid">`;
+
+  weekdays.forEach((wd, i) => {
+    html += `<div class="wh${i===0||i===6?' we':''}">${wd}</div>`;
+  });
+
+  for (let i = 0; i < startWd; i++) html += `<div class="cell empty"></div>`;
+
+  for (let d = 1; d <= daysIn; d++) {
+    const date = new Date(year, month, d);
+    const wd = date.getDay();
+    const hol = getHoliday(date);
+    const mu = getMakeup(date);
+    const isToday = sameDay(date, today);
+    const custom = getCustom(date);
+    let cls = ['cell'];
+    let style = '';
+    let inner = `<span>${d}</span>`;
+    let title = '';
+
+    if (hol) {
+      cls.push('holiday');
+      title = hol.name + ' ' + hol.dateText;
+      if (custom) {
+        cls.push('custom');
+        style = `background:${custom.color};`;
+        inner += `<span class="cn">${custom.note}</span>`;
+      } else {
+        style = `background:${hol.color};`;
+        inner += `<span class="hn">${hol.shortName}</span>`;
+      }
+    } else if (mu) {
+      cls.push('makeup');
+      title = mu.reason;
+      if (custom) {
+        cls.push('custom');
+        style = `background:${custom.color};color:#fff;`;
+        inner += `<span class="cn">${custom.note}</span>`;
+      }
+    } else if (custom) {
+      cls.push('custom');
+      style = `background:${custom.color};color:#fff;font-weight:700;`;
+      inner += `<span class="cn">${custom.note || ''}</span>`;
+      title = custom.note;
+    } else if (wd === 0 || wd === 6) {
+      cls.push('we');
+    }
+    if (isToday) cls.push('today');
+
+    html += `<div class="${cls.join(' ')}" style="${style}" title="${title}" data-date="${dateKey(date)}">${inner}</div>`;
+  }
+
+  html += `</div></div>`;
+  return html;
+}
+
+/* ===== 渲染所有月份 ===== */
+function renderCalendars() {
+  const months = [
+    [2026, 8], [2026, 9], [2026,10],
+    [2026,11], [2027, 0], [2027, 1],
+    [2027, 2], [2027, 3], [2027, 4]
+  ];
+  document.getElementById('calendars').innerHTML =
+    months.map(([y, m]) => renderMonth(y, m)).join('');
+}
+
+/* ===== 渲染图例 ===== */
+function renderLegend() {
+  const items = holidays.map(h => ({ bg: h.color, label: h.name }));
+  items.push({ bg: 'repeating-linear-gradient(45deg,#fef3c7,#fef3c7 5px,#fde68a 5px,#fde68a 10px)', label: '调休上班' });
+  items.push({ bg: '', label: '今天', todayRing: true });
+  document.getElementById('legendItems').innerHTML = items.map(i => `
+    <div class="legend-item">
+      <div class="legend-swatch${i.todayRing ? ' today-swatch' : ''}" style="${i.bg ? 'background:'+i.bg : ''}"></div>
+      <span>${i.label}</span>
+    </div>
+  `).join('');
+}
+
+/* ===== 自定义标识存储 ===== */
+const STORAGE_KEY = 'holiday_calendar_custom_marks';
+const presetColors = [
+  '#ef4444', '#f97316', '#f59e0b', '#eab308',
+  '#22c55e', '#10b981', '#06b6d4', '#3b82f6',
+  '#6366f1', '#8b5cf6', '#ec4899', '#6b7280'
+];
+
+let customMarks = {};
+
+try {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored) customMarks = JSON.parse(stored);
+} catch(e) {}
+
+function saveCustomMarks() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(customMarks)); } catch(e) {}
+}
+
+function getCustom(d) {
+  return customMarks[dateKey(d)] || null;
+}
+
+/* ===== 编辑弹窗逻辑 ===== */
+let editingDateKey = null;
+let selectedColor = '#3b82f6';
+let usingCustomColor = false;
+
+const modalOverlay = document.getElementById('modalOverlay');
+const modalTitle = document.getElementById('modalTitle');
+const modalDate = document.getElementById('modalDate');
+const colorPalette = document.getElementById('colorPalette');
+const noteInput = document.getElementById('noteInput');
+const charCount = document.getElementById('charCount');
+const btnClear = document.getElementById('btnClear');
+const btnSave = document.getElementById('btnSave');
+const btnCancel = document.getElementById('btnCancel');
+const toast = document.getElementById('toast');
+const clearAllBtn = document.getElementById('clearAllBtn');
+
+/* 渲染颜色选择器 */
+function renderColorPalette() {
+  let html = '';
+  presetColors.forEach(c => {
+    html += `<div class="color-opt" data-color="${c}" style="background:${c}"></div>`;
+  });
+  html += `<div class="color-opt custom-color-wrap" title="自定义颜色"><input type="color" id="customColorPicker" value="#3b82f6"></div>`;
+  colorPalette.innerHTML = html;
+
+  colorPalette.querySelectorAll('.color-opt[data-color]').forEach(el => {
+    el.addEventListener('click', () => {
+      colorPalette.querySelectorAll('.color-opt').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedColor = el.dataset.color;
+      usingCustomColor = false;
+    });
+  });
+
+  const picker = document.getElementById('customColorPicker');
+  const wrap = picker.parentElement;
+  picker.addEventListener('input', (e) => {
+    colorPalette.querySelectorAll('.color-opt').forEach(o => o.classList.remove('selected'));
+    wrap.classList.add('selected');
+    selectedColor = e.target.value;
+    usingCustomColor = true;
+  });
+}
+
+/* Toast 提示 */
+let toastTimer = null;
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+/* 打开弹窗 */
+function openModal(dateStr) {
+  editingDateKey = dateStr;
+  const existing = customMarks[dateStr];
+  selectedColor = existing ? existing.color : '#3b82f6';
+  usingCustomColor = false;
+
+  // 显示日期
+  const parts = dateStr.split('-');
+  const y = parts[0], m = parseInt(parts[1]), d = parseInt(parts[2]);
+  const dt = new Date(y, m-1, d);
+  const wd = '日一二三四五六'[dt.getDay()];
+  modalDate.textContent = `${y}年${m}月${d}日（周${wd}）`;
+
+  // 颜色选中状态
+  colorPalette.querySelectorAll('.color-opt').forEach(o => o.classList.remove('selected'));
+  if (existing) {
+    const matched = colorPalette.querySelector(`.color-opt[data-color="${existing.color}"]`);
+    if (matched) {
+      matched.classList.add('selected');
+    } else {
+      // 自定义颜色
+      const picker = document.getElementById('customColorPicker');
+      picker.value = existing.color;
+      picker.parentElement.classList.add('selected');
+      usingCustomColor = true;
+    }
+  }
+
+  // 备注内容
+  noteInput.value = existing ? (existing.note || '') : '';
+  updateCharCount();
+
+  btnClear.style.display = existing ? 'block' : 'none';
+
+  modalOverlay.classList.add('active');
+  setTimeout(() => noteInput.focus(), 100);
+}
+
+/* 关闭弹窗 */
+function closeModal() {
+  modalOverlay.classList.remove('active');
+  editingDateKey = null;
+}
+
+/* 字数计数 */
+function updateCharCount() {
+  const len = noteInput.value.length;
+  charCount.textContent = `${len} / 4`;
+  charCount.classList.toggle('over', len > 4);
+}
+
+noteInput.addEventListener('input', () => {
+  if (noteInput.value.length > 4) {
+    noteInput.value = noteInput.value.slice(0, 4);
+  }
+  updateCharCount();
+});
+
+/* 保存标识 */
+btnSave.addEventListener('click', () => {
+  const note = noteInput.value.trim();
+  customMarks[editingDateKey] = { color: selectedColor, note: note };
+  saveCustomMarks();
+  renderCalendars();
+  closeModal();
+  showToast('标识已保存');
+});
+
+/* 清除单个标识 */
+btnClear.addEventListener('click', () => {
+  delete customMarks[editingDateKey];
+  saveCustomMarks();
+  renderCalendars();
+  closeModal();
+  showToast('标识已清除');
+});
+
+/* 取消 */
+btnCancel.addEventListener('click', closeModal);
+
+/* 点击遮罩关闭 */
+modalOverlay.addEventListener('click', (e) => {
+  if (e.target === modalOverlay) closeModal();
+});
+
+/* ESC 关闭 */
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modalOverlay.classList.contains('active')) closeModal();
+  if (e.key === 'Enter' && modalOverlay.classList.contains('active')) btnSave.click();
+});
+
+/* 清除全部 */
+clearAllBtn.addEventListener('click', () => {
+  if (Object.keys(customMarks).length === 0) {
+    showToast('暂无自定义标识');
+    return;
+  }
+  customMarks = {};
+  saveCustomMarks();
+  renderCalendars();
+  showToast('已清除全部标识');
+});
+
+/* 导出标识数据 */
+const exportBtn = document.getElementById('exportBtn');
+exportBtn.addEventListener('click', () => {
+  const keys = Object.keys(customMarks);
+  if (keys.length === 0) {
+    showToast('暂无标识可导出');
+    return;
+  }
+  const data = {
+    exportedAt: new Date().toISOString(),
+    marks: customMarks
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'holiday_marks.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast(`已导出 ${keys.length} 条标识`);
+});
+
+/* 导入标识数据 */
+const importBtn = document.getElementById('importBtn');
+const importFile = document.getElementById('importFile');
+importBtn.addEventListener('click', () => importFile.click());
+importFile.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      const marks = data.marks || data;
+      if (typeof marks !== 'object' || marks === null) throw new Error('格式错误');
+      const count = Object.keys(marks).length;
+      Object.assign(customMarks, marks);
+      saveCustomMarks();
+      renderCalendars();
+      showToast(`已导入 ${count} 条标识`);
+    } catch(err) {
+      showToast('导入失败：文件格式错误');
+    }
+    importFile.value = '';
+  };
+  reader.readAsText(file);
+});
+
+/* 日历点击委托 */
+document.getElementById('calendars').addEventListener('click', (e) => {
+  const cell = e.target.closest('.cal-grid .cell:not(.empty)');
+  if (!cell) return;
+  const dateStr = cell.dataset.date;
+  if (dateStr) openModal(dateStr);
+});
+
+/* ===== 初始化 ===== */
+renderStats();
+renderNextHoliday();
+renderCards();
+renderCalendars();
+renderLegend();
+renderColorPalette();
+</script>
+</body>
+</html>
