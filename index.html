@@ -647,6 +647,160 @@ footer a {
 .hint-bar .clear-all-btn:hover {
   background: #dbeafe;
 }
+
+/* 云同步按钮 */
+.hint-bar .sync-btn {
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  color: #15803d;
+  padding: 3px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hint-bar .sync-btn:hover { background: #dcfce7; }
+
+.hint-bar .sync-btn.synced {
+  background: #dcfce7;
+  border-color: #4ade80;
+}
+
+.hint-bar .sync-btn .sync-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #ccc;
+  flex-shrink: 0;
+}
+
+.hint-bar .sync-btn.synced .sync-dot {
+  background: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.25);
+}
+
+/* 云同步设置弹窗 */
+.sync-panel {
+  display: none;
+}
+
+.sync-panel.active {
+  display: block;
+}
+
+.sync-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.sync-status.connected {
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  color: #15803d;
+}
+
+.sync-status.disconnected {
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  color: #92400e;
+}
+
+.sync-status .status-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.sync-status.connected .status-dot {
+  background: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.25);
+}
+
+.sync-status.disconnected .status-dot {
+  background: #f59e0b;
+}
+
+.token-input-wrap {
+  margin-bottom: 16px;
+}
+
+.token-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: "Cascadia Code", "Consolas", monospace;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.token-input:focus { border-color: #22c55e; }
+.token-input::placeholder { color: #d1d5db; }
+
+.token-help {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+.token-help a { color: #2563eb; }
+
+.sync-info {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #f9fafb;
+  border-radius: 8px;
+  line-height: 1.6;
+}
+
+.sync-btn-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.btn-connect {
+  background: #22c55e;
+  color: #fff;
+}
+
+.btn-connect:hover { background: #16a34a; }
+
+.btn-disconnect {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1.5px solid #fecaca;
+}
+
+.btn-disconnect:hover { background: #fee2e2; }
+
+.sync-loader {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border: 2px solid #bfdbfe;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
 </style>
 </head>
 <body>
@@ -662,8 +816,12 @@ footer a {
 
   <div class="hint-bar">
     <span class="icon">💡</span>
-    <span>点击任意日期可自定义颜色和备注（最多4个字），标识会自动保存到当前浏览器</span>
+    <span>点击任意日期可自定义颜色和备注（最多4个字），标识会自动保存到本地</span>
     <div class="hint-actions">
+      <button class="sync-btn" id="syncBtn" title="点击设置云同步">
+        <span class="sync-dot"></span>
+        <span>云同步</span>
+      </button>
       <button class="hint-btn" id="exportBtn" title="导出标识数据为文件">导出</button>
       <button class="hint-btn" id="importBtn" title="从文件导入标识数据">导入</button>
       <input type="file" id="importFile" accept=".json" style="display:none">
@@ -712,6 +870,35 @@ footer a {
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- 云同步设置弹窗 -->
+<div class="modal-overlay" id="syncOverlay">
+  <div class="modal" style="width:380px;">
+    <h3>云同步设置</h3>
+    <div class="modal-date">通过 GitHub Gist 跨浏览器同步标识数据</div>
+
+    <div class="sync-status" id="syncStatus">
+      <span class="status-dot"></span>
+      <span id="syncStatusText">未连接</span>
+    </div>
+
+    <div class="token-input-wrap" id="tokenSection">
+      <label class="field-label">GitHub Personal Access Token</label>
+      <input type="password" class="token-input" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+      <div class="token-help">
+        Token 需勾选 <b>gist</b> 权限。前往
+        <a href="https://github.com/settings/tokens/new" target="_blank">生成 Token</a>
+      </div>
+    </div>
+
+    <div class="sync-info" id="syncInfo" style="display:none;"></div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" id="btnSyncClose">关闭</button>
+      <button class="btn-connect" id="btnSyncConnect">连接云同步</button>
+    </div>
+  </div>
+</div>
 
 <script>
 /* ===== 假期数据 ===== */
@@ -947,7 +1134,221 @@ try {
 
 function saveCustomMarks() {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(customMarks)); } catch(e) {}
+  cloudSync.push();
 }
+
+/* ===== GitHub Gist 云同步 ===== */
+const GIST_FILENAME = 'holiday-calendar-marks.json';
+const TOKEN_KEY = 'holiday_calendar_github_token';
+const GIST_ID_KEY = 'holiday_calendar_gist_id';
+
+const cloudSync = {
+  token: null,
+  gistId: null,
+  syncing: false,
+  pushTimer: null,
+
+  init() {
+    try {
+      this.token = localStorage.getItem(TOKEN_KEY) || null;
+      this.gistId = localStorage.getItem(GIST_ID_KEY) || null;
+    } catch(e) {}
+    this.updateUI();
+    if (this.token) this.pull();
+  },
+
+  async connect(token) {
+    this.token = token;
+    try { localStorage.setItem(TOKEN_KEY, token); } catch(e) {}
+    const ok = await this.pull();
+    if (ok) {
+      this.updateUI();
+      return true;
+    }
+    return false;
+  },
+
+  disconnect() {
+    this.token = null;
+    this.gistId = null;
+    try {
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(GIST_ID_KEY);
+    } catch(e) {}
+    this.updateUI();
+  },
+
+  async findOrCreateGist() {
+    if (this.gistId) {
+      try {
+        const res = await fetch(`https://api.github.com/gists/${this.gistId}`, {
+          headers: { 'Authorization': `Bearer ${this.token}` }
+        });
+        if (res.ok) return this.gistId;
+      } catch(e) {}
+    }
+
+    const res = await fetch('https://api.github.com/gists', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${this.token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        description: 'Holiday Calendar Custom Marks',
+        public: false,
+        files: {
+          [GIST_FILENAME]: { content: JSON.stringify(customMarks, null, 2) }
+        }
+      })
+    });
+
+    if (!res.ok) throw new Error('Create gist failed: ' + res.status);
+    const data = await res.json();
+    this.gistId = data.id;
+    try { localStorage.setItem(GIST_ID_KEY, this.gistId); } catch(e) {}
+    return this.gistId;
+  },
+
+  async pull() {
+    if (!this.token) return false;
+    if (this.syncing) return false;
+    this.syncing = true;
+
+    try {
+      let gistData = null;
+
+      if (this.gistId) {
+        const res = await fetch(`https://api.github.com/gists/${this.gistId}`, {
+          headers: { 'Authorization': `Bearer ${this.token}` }
+        });
+        if (res.ok) gistData = await res.json();
+      }
+
+      if (!gistData) {
+        const listRes = await fetch('https://api.github.com/gists?per_page=100', {
+          headers: { 'Authorization': `Bearer ${this.token}` }
+        });
+        if (!listRes.ok) throw new Error('Auth failed');
+        const gists = await listRes.json();
+        const found = gists.find(g => g.files && g.files[GIST_FILENAME]);
+        if (found) {
+          this.gistId = found.id;
+          try { localStorage.setItem(GIST_ID_KEY, this.gistId); } catch(e) {}
+          const res2 = await fetch(`https://api.github.com/gists/${this.gistId}`, {
+            headers: { 'Authorization': `Bearer ${this.token}` }
+          });
+          if (res2.ok) gistData = await res2.json();
+        }
+      }
+
+      if (gistData && gistData.files && gistData.files[GIST_FILENAME]) {
+        const content = gistData.files[GIST_FILENAME].content;
+        if (content) {
+          const cloudMarks = JSON.parse(content);
+          if (typeof cloudMarks === 'object' && cloudMarks !== null) {
+            const cloudCount = Object.keys(cloudMarks).length;
+            const localCount = Object.keys(customMarks).length;
+
+            if (cloudCount > localCount || (cloudCount > 0 && localCount === 0)) {
+              customMarks = cloudMarks;
+              try { localStorage.setItem(STORAGE_KEY, JSON.stringify(customMarks)); } catch(e) {}
+              renderCalendars();
+              if (cloudCount > 0) showToast(`已从云端同步 ${cloudCount} 条标识`);
+            } else if (cloudCount > 0 && cloudCount !== localCount) {
+              this.pushImmediate();
+            }
+          }
+        }
+      } else {
+        await this.findOrCreateGist();
+      }
+
+      return true;
+    } catch(err) {
+      this.syncing = false;
+      return false;
+    } finally {
+      this.syncing = false;
+    }
+  },
+
+  push() {
+    clearTimeout(this.pushTimer);
+    this.pushTimer = setTimeout(() => this.pushImmediate(), 1500);
+  },
+
+  async pushImmediate() {
+    if (!this.token || this.syncing) return;
+    this.syncing = true;
+
+    try {
+      let gistId = this.gistId;
+
+      if (!gistId) {
+        gistId = await this.findOrCreateGist();
+      }
+
+      const res = await fetch(`https://api.github.com/gists/${gistId}`, {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${this.token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          files: {
+            [GIST_FILENAME]: { content: JSON.stringify(customMarks, null, 2) }
+          }
+        })
+      });
+
+      if (res.status === 404) {
+        this.gistId = null;
+        try { localStorage.removeItem(GIST_ID_KEY); } catch(e) {}
+        this.syncing = false;
+        return this.pushImmediate();
+      }
+
+      if (!res.ok) throw new Error('Push failed: ' + res.status);
+    } catch(err) {
+    } finally {
+      this.syncing = false;
+    }
+  },
+
+  updateUI() {
+    const syncBtn = document.getElementById('syncBtn');
+    const syncStatus = document.getElementById('syncStatus');
+    const syncStatusText = document.getElementById('syncStatusText');
+    const tokenSection = document.getElementById('tokenSection');
+    const btnConnect = document.getElementById('btnSyncConnect');
+    const syncInfo = document.getElementById('syncInfo');
+
+    if (this.token) {
+      syncBtn.classList.add('synced');
+      syncStatus.className = 'sync-status connected';
+      syncStatusText.textContent = '已连接，标识自动云同步';
+      tokenSection.style.display = 'none';
+      btnConnect.textContent = '断开连接';
+      btnConnect.className = 'modal-actions btn-disconnect';
+      syncInfo.style.display = 'block';
+      syncInfo.innerHTML = `
+        <b>同步状态：</b>已开启<br>
+        <b>存储方式：</b>GitHub Gist（私密）<br>
+        <b>同步策略：</b>本地修改后 1.5 秒自动推送到云端，页面加载时自动拉取<br>
+        <b>跨浏览器：</b>换浏览器后输入同一 Token 即可同步
+      `;
+    } else {
+      syncBtn.classList.remove('synced');
+      syncStatus.className = 'sync-status disconnected';
+      syncStatusText.textContent = '未连接，标识仅保存在本地';
+      tokenSection.style.display = 'block';
+      btnConnect.textContent = '连接云同步';
+      btnConnect.className = 'modal-actions btn-connect';
+      syncInfo.style.display = 'none';
+    }
+  }
+};
 
 function getCustom(d) {
   return customMarks[dateKey(d)] || null;
@@ -1111,6 +1512,53 @@ clearAllBtn.addEventListener('click', () => {
   showToast('已清除全部标识');
 });
 
+/* ===== 云同步弹窗交互 ===== */
+const syncOverlay = document.getElementById('syncOverlay');
+const syncBtn = document.getElementById('syncBtn');
+const btnSyncClose = document.getElementById('btnSyncClose');
+const btnSyncConnect = document.getElementById('btnSyncConnect');
+const tokenInput = document.getElementById('tokenInput');
+
+syncBtn.addEventListener('click', () => {
+  cloudSync.updateUI();
+  syncOverlay.classList.add('active');
+});
+
+btnSyncClose.addEventListener('click', () => syncOverlay.classList.remove('active'));
+
+syncOverlay.addEventListener('click', (e) => {
+  if (e.target === syncOverlay) syncOverlay.classList.remove('active');
+});
+
+btnSyncConnect.addEventListener('click', async () => {
+  if (cloudSync.token) {
+    cloudSync.disconnect();
+    showToast('已断开云同步');
+    return;
+  }
+  const token = tokenInput.value.trim();
+  if (!token) {
+    showToast('请输入 GitHub Token');
+    return;
+  }
+  if (!token.startsWith('ghp_') && !token.startsWith('github_pat_')) {
+    showToast('Token 格式不正确（应以 ghp_ 或 github_pat_ 开头）');
+    return;
+  }
+  btnSyncConnect.textContent = '连接中...';
+  btnSyncConnect.disabled = true;
+  const ok = await cloudSync.connect(token);
+  btnSyncConnect.disabled = false;
+  if (ok) {
+    showToast('云同步已开启');
+    tokenInput.value = '';
+    syncOverlay.classList.remove('active');
+  } else {
+    showToast('连接失败：Token 无效或无 gist 权限');
+    btnSyncConnect.textContent = '连接云同步';
+  }
+});
+
 /* 导出标识数据 */
 const exportBtn = document.getElementById('exportBtn');
 exportBtn.addEventListener('click', () => {
@@ -1174,6 +1622,7 @@ renderCards();
 renderCalendars();
 renderLegend();
 renderColorPalette();
+cloudSync.init();
 </script>
 </body>
 </html>
